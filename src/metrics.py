@@ -19,7 +19,7 @@ class Metric(Enum):
 		Enum with model evaluation metrics
 	"""
 	#Accuracy
-	ACCURACY = MetricBase('Accuracy', lambda TP,TN,FP,FN: TP+TN / (TP+TN+FP+FN))
+	ACCURACY = MetricBase('Accuracy', lambda TP,TN,FP,FN: (TP+TN) / (TP+TN+FP+FN))
 
 	#TP rate = Recall = Sensitivity
 	TP_RATE = MetricBase('True Positive Rate', lambda TP,TN,FP,FN: TP / (TP+FN)),
@@ -38,3 +38,9 @@ class Metric(Enum):
 
 	#Single ROC point
 	ROC_STEP = MetricBase('ROC Step', lambda TP,TN,FP,FN: (TP/(TP+FN), 1-TN/(TN+FP)) )
+
+	def getName(self):
+		return self.value.getName()
+
+	def calculate(self, *args):
+		return self.value.calculate(*args)
